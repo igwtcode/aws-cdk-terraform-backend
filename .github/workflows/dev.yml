@@ -30,3 +30,6 @@ jobs:
       - run: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
       - run: npm run build
+        env:
+          BUCKET_NAME: ${{ vars.BUCKET_NAME }}
+          TABLE_NAME: ${{ vars.TABLE_NAME }}
