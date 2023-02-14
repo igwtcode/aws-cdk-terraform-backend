@@ -1,0 +1,16 @@
+.github
+.vscode
+.wireit
+node_modules
+dist
+tmp
+jest.config.ts
+tsup.config.ts
+LICENSE
+.cdk*
+cdk.*
+*.md
+*.yml
+*.js
+*.cjs
+*.json

@@ -1,0 +1,35 @@
+name: cdk-deploy
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths-ignore: ["*.md"]
+jobs:
+  deploy:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          node-version: "latest"
+      - name: setup cache
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: node_modules
+          key: deps-node-modules-ubuntu-latest-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci
+        if: steps.cache.outputs.cache-hit != 'true'
+      - run: npm run deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_DEFAULT_ACCOUNT: ${{ secrets.AWS_DEFAULT_ACCOUNT }}
+          BUCKET_NAME: ${{ vars.BUCKET_NAME }}
+          TABLE_NAME: ${{ vars.TABLE_NAME }}

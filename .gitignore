@@ -1,0 +1,15 @@
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+
+.cdk*
+cdk.*
+
+.DS_Store
+.idea
+.eslintcache
+.wireit
+dist
+tmp
+template.yml

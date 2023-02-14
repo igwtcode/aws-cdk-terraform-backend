@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "Node16",
+    "moduleResolution": "node16",
+    "lib": ["es2020"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "noEmitOnError": true,
+    "removeComments": true,
+    "pretty": true,
+    "declaration": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": false,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitOverride": true,
+    "typeRoots": ["./node_modules/@types"],
+    "baseUrl": ".",
+    "rootDir": "./src",
+    "paths": {
+      "@src/*": ["src/*"]
+    },
+    "types": ["node", "jest"]
+  },
+  "exclude": ["node_modules", "cdk.out", "dist"],
+  "include": ["src/**/*", ".eslintrc.cjs"]
+}

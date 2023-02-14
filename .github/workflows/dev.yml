@@ -1,0 +1,32 @@
+name: dev
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, synchronize]
+    paths-ignore: ["*.md"]
+  push:
+    branches: ["igwtcode/issue[0-9]+", "dev-**", "dev/**"]
+    paths-ignore: ["*.md"]
+jobs:
+  build:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: get code
+        uses: actions/checkout@v3
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          node-version: "latest"
+      - name: setup cache
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: node_modules
+          key: deps-node-modules-ubuntu-latest-${{ hashFiles('**/package-lock.json') }}
+      - run: npm ci
+        if: steps.cache.outputs.cache-hit != 'true'
+      - run: npm run build
