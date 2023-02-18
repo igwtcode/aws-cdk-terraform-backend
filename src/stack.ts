@@ -14,17 +14,19 @@ export class TerraformBackendStack extends _cdk.Stack {
       ...stackProps,
     });
 
-    new _dynamodb.Table(this, 'DynamoDBTable', {
-      tableName: appConfig.dynamodbTableName,
-      partitionKey: {
-        name: 'LockID',
-        type: _dynamodb.AttributeType.STRING,
-      },
-      encryption: _dynamodb.TableEncryption.DEFAULT,
-      billingMode: _dynamodb.BillingMode.PAY_PER_REQUEST,
-      tableClass: _dynamodb.TableClass.STANDARD,
-      removalPolicy: _cdk.RemovalPolicy.DESTROY,
-    });
+    for (let idx = 0; idx < appConfig.dynamodbTableNames.length; idx++) {
+      new _dynamodb.Table(this, `DynamoDBTable-${idx}`, {
+        tableName: appConfig.dynamodbTableNames[idx],
+        partitionKey: {
+          name: 'LockID',
+          type: _dynamodb.AttributeType.STRING,
+        },
+        encryption: _dynamodb.TableEncryption.DEFAULT,
+        billingMode: _dynamodb.BillingMode.PAY_PER_REQUEST,
+        tableClass: _dynamodb.TableClass.STANDARD,
+        removalPolicy: _cdk.RemovalPolicy.DESTROY,
+      });
+    }
 
     const bucket = new _s3.Bucket(this, 'S3Bucket', {
       bucketName: appConfig.s3BucketName,

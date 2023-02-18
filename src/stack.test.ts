@@ -8,28 +8,30 @@ describe('TerraformBackendStack', () => {
   const stack = new TerraformBackendStack(app);
   const template = Template.fromStack(stack);
 
-  it('should have dynamodb table with correct config', () => {
-    template.hasResourceProperties('AWS::DynamoDB::Table', {
-      TableName: appConfig.dynamodbTableName,
-      TableClass: 'STANDARD',
-      BillingMode: 'PAY_PER_REQUEST',
-      KeySchema: [
-        {
-          AttributeName: 'LockID',
-          KeyType: 'HASH',
+  for (let idx = 0; idx < appConfig.dynamodbTableNames.length; idx++) {
+    it(`should have dynamodb table with correct config - ${idx}`, () => {
+      template.hasResourceProperties('AWS::DynamoDB::Table', {
+        TableName: appConfig.dynamodbTableNames[idx],
+        TableClass: 'STANDARD',
+        BillingMode: 'PAY_PER_REQUEST',
+        KeySchema: [
+          {
+            AttributeName: 'LockID',
+            KeyType: 'HASH',
+          },
+        ],
+        AttributeDefinitions: [
+          {
+            AttributeName: 'LockID',
+            AttributeType: 'S',
+          },
+        ],
+        SSESpecification: {
+          SSEEnabled: false,
         },
-      ],
-      AttributeDefinitions: [
-        {
-          AttributeName: 'LockID',
-          AttributeType: 'S',
-        },
-      ],
-      SSESpecification: {
-        SSEEnabled: false,
-      },
+      });
     });
-  });
+  }
 
   it('should have s3 bucket with correct config', () => {
     template.hasResourceProperties('AWS::S3::Bucket', {

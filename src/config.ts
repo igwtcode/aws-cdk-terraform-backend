@@ -1,15 +1,15 @@
 import * as _cdk from 'aws-cdk-lib';
 
 export const appConfig = {
-  account: process.env.AWS_DEFAULT_ACCOUNT,
-  region: process.env.AWS_DEFAULT_REGION,
-  dynamodbTableName: process.env.TABLE_NAME,
-  s3BucketName: process.env.BUCKET_NAME,
+  account: process.env.AWS_ACCOUNT,
+  region: process.env.AWS_REGION,
+  dynamodbTableNames: process.env.TF_LOCK_TABLE_NAMES?.split(',') || [],
+  s3BucketName: process.env.TF_STATE_BUCKET_NAME,
 };
 
 export const stackProps: _cdk.StackProps = {
   terminationProtection: false,
-  description: 'DynamoDB Table and S3 Bucket for Terraform Backend',
+  description: 'DynamoDB Tables and S3 Bucket for Terraform Backend',
   env: {
     account: appConfig.account,
     region: appConfig.region,
