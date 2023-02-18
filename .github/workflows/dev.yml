@@ -31,5 +31,5 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
       - run: npm run build
         env:
-          BUCKET_NAME: ${{ vars.BUCKET_NAME }}
-          TABLE_NAME: ${{ vars.TABLE_NAME }}
+          TF_STATE_BUCKET_NAME: ${{ secrets.TF_STATE_BUCKET_NAME }}
+          TF_LOCK_TABLE_NAMES: ${{ secrets.TF_LOCK_TABLE_NAMES }}
