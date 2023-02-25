@@ -55,7 +55,7 @@
     "wireit": "^0.9.5"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.65.0",
+    "aws-cdk-lib": "2.66.1",
     "constructs": "^10.1.254",
     "source-map-support": "^0.5.21"
   },
