@@ -7,10 +7,10 @@ export default defineConfig({
   splitting: false,
   sourcemap: false,
   entry: ['src/index.ts'],
-  format: ['esm'],
+  format: ['cjs'],
   // format: ['esm', 'cjs'],
   outDir: 'dist',
   platform: 'node',
-  target: 'node16',
+  target: 'node14',
   tsconfig: 'tsconfig.json',
 });

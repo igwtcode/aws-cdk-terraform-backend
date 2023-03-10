@@ -1,22 +1,71 @@
-import * as _cdk from 'aws-cdk-lib';
+import { DefaultStackSynthesizer, StackProps } from 'aws-cdk-lib';
+import { MD5 } from 'object-hash';
 
-export const appConfig = {
-  account: process.env.AWS_ACCOUNT,
-  region: process.env.AWS_REGION,
-  dynamodbTableNames: process.env.TF_LOCK_TABLE_NAMES?.split(',') || [],
-  s3BucketName: process.env.TF_STATE_BUCKET_NAME,
-};
+/**
+ * AWS Account and Region to deploy the stack
+ */
+export const stackEnv = {
+  account: process.env.AWS_ACCOUNT || '000000000000',
+  region: process.env.AWS_REGION || 'us-east-1',
+} as const;
 
-export const stackProps: _cdk.StackProps = {
+/**
+ * Tags to apply to the stack and resources
+ */
+// TODO: modify tags to your own needs
+export const stackTags = {
+  Project: 'aws-cdk-terraform-backend', // this is used as stack name
+  Terrform: 'true',
+  CDK: 'true',
+} as const;
+
+/**
+ * Stack properties
+ */
+// TODO: modify stack properties to your own needs
+export const stackProps: StackProps = {
+  env: stackEnv,
+  tags: stackTags,
   terminationProtection: false,
-  description: 'DynamoDB Tables and S3 Bucket for Terraform Backend',
-  env: {
-    account: appConfig.account,
-    region: appConfig.region,
-  },
-  tags: {
-    Project: 'aws-cdk-terraform-backend',
-    Terrform: 'true',
-    CDK: 'true',
-  },
+  analyticsReporting: false,
+  stackName: stackTags.Project,
+  description: 'S3 Buckets and DynamoDB Tables for Terraform Backend',
+  synthesizer: new DefaultStackSynthesizer({ generateBootstrapVersionRule: false }),
+} as const;
+
+/**
+ * Get a valid and unique name using `basename`, `stackTags` and `stackEnv`
+ * for s3 buckets and dynamodb tables
+ */
+function generateName(baseName: string, length: number): string {
+  if (!(baseName.length > 3 && !baseName.startsWith('-') && !baseName.endsWith('-')))
+    throw Error('invalid name');
+  const hashBase = baseName + stackTags.Project + stackEnv.account + stackEnv.region;
+  return `${baseName}-${MD5(hashBase)}`.toLowerCase().trim().substring(0, length);
+}
+
+/**
+ * Application configuration
+ */
+export const appConfig = {
+  /**
+   * list of DynamoDB table names
+   * from `DYNAMODB_TABLE_NAMES` environment variable (_comma separated list of names_)
+   *
+   * **NOTE**: to generate unique names, use `generateName` function
+   * @example DYNAMODB_TABLE_NAMES="terraform-state-lock-1,terraform-state-lock-2"
+   */
+  tableNames: process.env.DYNAMODB_TABLE_NAMES?.split(',').map((n) => n.trim()) || [
+    generateName('terraform-state-lock', 30),
+  ],
+  /**
+   * list of S3 bucket names
+   * from `S3_BUCKET_NAMES` environment variable (_comma separated list of names_)
+   *
+   * **NOTE**: to generate unique names, use `generateName` function
+   * @example S3_BUCKET_NAMES="globally-unique-bucket-name-1,globally-unique-bucket-name-2"
+   */
+  bucketNames: process.env.S3_BUCKET_NAMES?.split(',').map((n) => n.trim()) || [
+    generateName('terraform-state', 63),
+  ],
 };

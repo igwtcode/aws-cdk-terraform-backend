@@ -1,15 +1,16 @@
 *.js
 !jest.config.js
 *.d.ts
-node_modules
 
 .cdk*
+# !cdk.context.json
 cdk.out
 
-.DS_Store
-.idea
-.eslintcache
-.wireit
-dist
-tmp
-template.yml
+**/node_modules
+**/.DS_Store
+**/.idea
+**/.eslintcache
+**/.wireit
+**/dist
+**/tmp
+**/template.yml

@@ -6,7 +6,7 @@ const jestConfig: JestConfigWithTsJest = {
   testEnvironment: 'node',
   testMatch: ['**/*.test.ts'],
   moduleNameMapper: {
-    '^@src/(.*).js$': '<rootDir>/src/$1',
+    '^@src/(.*)$': '<rootDir>/src/$1',
   },
   transform: {
     '^.+\\.tsx?$': 'ts-jest',

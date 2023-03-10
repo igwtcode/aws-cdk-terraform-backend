@@ -3,8 +3,8 @@
   "files.exclude": {
     "**/.idea": true,
     "**/node_modules": true,
-    ".DS_Store": true,
-    ".wireit": true,
-    ".eslintcache": true
+    "**/.DS_Store": true,
+    "**/.wireit": true,
+    "**/.eslintcache": true
   }
 }

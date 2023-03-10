@@ -28,5 +28,5 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
-          TF_STATE_BUCKET_NAME: ${{ secrets.TF_STATE_BUCKET_NAME }}
-          TF_LOCK_TABLE_NAMES: ${{ secrets.TF_LOCK_TABLE_NAMES }}
+          # S3_BUCKET_NAMES: ${{ secrets.S3_BUCKET_NAMES }}
+          # DYNAMODB_TABLE_NAMES: ${{ secrets.DYNAMODB_TABLE_NAMES }}

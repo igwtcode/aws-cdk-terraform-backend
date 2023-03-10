@@ -1,10 +1,10 @@
 {
   "name": "@igwtcode/aws-cdk-terraform-backend",
-  "description": "aws-cdk app to create S3 bucket and DynamoDB table for storing terraform state and lock files",
+  "description": "aws-cdk app to create S3 buckets and DynamoDB tables for storing terraform state and lock files",
   "version": "1.0.0",
   "license": "MIT",
-  "type": "module",
-  "module": "dist/index.js",
+  "type": "commonjs",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
@@ -36,28 +36,30 @@
     "clean": "wireit"
   },
   "devDependencies": {
-    "@types/jest": "^29.4.0",
-    "@types/node": "18.14.0",
+    "@types/jest": "29.4.0",
+    "@types/node": "18.15.0",
     "@types/prettier": "2.7.2",
-    "@typescript-eslint/eslint-plugin": "^5.52.0",
-    "@typescript-eslint/parser": "^5.52.0",
-    "eslint": "^8.34.0",
-    "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "jest": "^29.4.3",
-    "prettier": "^2.8.4",
-    "rimraf": "^4.1.2",
-    "ts-jest": "^29.0.5",
-    "aws-cdk": "2.65.0",
-    "ts-node": "^10.9.1",
-    "typescript": "~4.9.5",
-    "tsup": "^6.6.3",
-    "wireit": "^0.9.5"
+    "@types/object-hash": "3.0.2",
+    "@typescript-eslint/eslint-plugin": "5.54.1",
+    "@typescript-eslint/parser": "5.54.1",
+    "eslint": "8.35.0",
+    "eslint-config-prettier": "8.7.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "jest": "29.5.0",
+    "prettier": "2.8.4",
+    "rimraf": "4.4.0",
+    "object-hash": "3.0.0",
+    "ts-jest": "29.0.5",
+    "aws-cdk": "2.68.0",
+    "ts-node": "10.9.1",
+    "typescript": "4.9.5",
+    "tsup": "6.6.3",
+    "wireit": "0.9.5"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.65.0",
-    "constructs": "^10.1.254",
-    "source-map-support": "^0.5.21"
+    "aws-cdk-lib": "2.68.0",
+    "constructs": "10.1.273",
+    "source-map-support": "0.5.21"
   },
   "wireit": {
     "destroy": {
@@ -134,7 +136,12 @@
     "terraform",
     "tfstate",
     "backend",
+    "s3",
+    "bucket",
     "s3_bucket",
-    "dynamodb_table"
+    "dynamodb",
+    "table",
+    "dynamodb_table",
+    "typescript"
   ]
 }
